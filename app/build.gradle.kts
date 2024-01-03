@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.koin.android)
     ksp(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

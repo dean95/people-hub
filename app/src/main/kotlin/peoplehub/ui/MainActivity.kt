@@ -1,4 +1,4 @@
-package peoplehub
+package peoplehub.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
