@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "PeopleHub"
 include(":app")
 include(":annotation")
+include(":processor")
