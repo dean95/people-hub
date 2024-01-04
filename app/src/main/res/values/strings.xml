@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PeopleHub</string>
+
+    <!--  People screen  -->
+    <string name="people_screen_empty_title">No one is here yet</string>
+    <string name="add_person">Add person</string>
+
+
 </resources>
