@@ -29,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.peoplehub.R
 import peoplehub.domain.model.Person
-import peoplehub.ui.theme.Purple80
 import peoplehub.ui.theme.Spacing
 
 @Composable
@@ -40,9 +39,7 @@ fun PeopleScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.White)
+        modifier = modifier.fillMaxSize()
     ) {
         if (people.isEmpty()) {
             EmptyScreen(
@@ -72,13 +69,13 @@ fun PeopleScreen(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(Spacing.Medium)
-                    .background(Purple80, CircleShape)
+                    .background(MaterialTheme.colorScheme.primary, CircleShape)
                     .padding(Spacing.Small)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
@@ -95,7 +92,6 @@ private fun EmptyScreen(
 ) {
     Text(
         text = stringResource(id = R.string.people_screen_empty_title),
-        color = Color.Black,
         style = MaterialTheme.typography.titleLarge
     )
 
@@ -114,11 +110,12 @@ private fun PersonCard(
     modifier: Modifier = Modifier
 ) = Text(
     text = name,
-    color = Color.Black,
+    style = MaterialTheme.typography.bodyLarge,
+    color = MaterialTheme.colorScheme.onSecondary,
     modifier = modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(Spacing.Medium))
         .clickable { onClick(id) }
-        .background(Color.LightGray)
+        .background(MaterialTheme.colorScheme.secondary)
         .padding(horizontal = Spacing.Large, vertical = Spacing.Medium)
 )
