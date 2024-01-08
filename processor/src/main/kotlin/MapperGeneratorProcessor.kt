@@ -1,6 +1,7 @@
 import annotation.GenerateMapper
 import com.google.devtools.ksp.getDeclaredProperties
 import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
@@ -14,48 +15,61 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.ksp.writeTo
 import java.util.Locale
+import validator.SymbolValidator
 
 class MapperGeneratorProcessor(
-    private val codeGenerator: CodeGenerator
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger
 ) : SymbolProcessor {
 
+    private val symbolValidator = SymbolValidator(logger)
+
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        val symbols = resolver.getSymbolsWithAnnotation(GenerateMapper::class.qualifiedName.toString())
-        val classDeclarations = symbols.filterIsInstance<KSClassDeclaration>()
-        val mapperInterfaces = mutableMapOf<String, TypeSpec.Builder>()
-        val mapperImplementations = mutableMapOf<String, TypeSpec.Builder>()
+        var unresolvedSymbols = emptyList<KSAnnotated>()
+        val annotationName = GenerateMapper::class.qualifiedName
 
-        classDeclarations.forEach { classDeclaration ->
-            val mapperName = classDeclaration.annotations.find {
-                it.annotationType.resolve().declaration.qualifiedName?.asString() == GenerateMapper::class.qualifiedName
-            }?.arguments?.find { it.name?.asString() == "name" }?.value.toString()
-            val mapperInterfaceBuilder = mapperInterfaces.getOrPut(mapperName) {
-                TypeSpec.interfaceBuilder(mapperName)
+        if (annotationName != null) {
+            val resolvedSymbols = resolver.getSymbolsWithAnnotation(annotationName).toList()
+            val validatedSymbols = resolvedSymbols.filter(symbolValidator::isValid).toList()
+            val classDeclarations = validatedSymbols.filterIsInstance<KSClassDeclaration>()
+
+            val mapperInterfaces = mutableMapOf<String, TypeSpec.Builder>()
+            val mapperImplementations = mutableMapOf<String, TypeSpec.Builder>()
+
+            classDeclarations.forEach { classDeclaration ->
+                val mapperName = classDeclaration.annotations.find {
+                    it.annotationType.resolve().declaration.qualifiedName?.asString() == annotationName
+                }?.arguments?.find { it.name?.asString() == "name" }?.value.toString()
+                val mapperInterfaceBuilder = mapperInterfaces.getOrPut(mapperName) {
+                    TypeSpec.interfaceBuilder(mapperName)
+                }
+                val implClassName = "${mapperName}Impl"
+                val mapperImplementationBuilder = mapperImplementations.getOrPut(implClassName) {
+                    TypeSpec.classBuilder(implClassName)
+                        .addSuperinterface(ClassName("", mapperName))
+                        .addModifiers(KModifier.INTERNAL)
+                }
+                generateMapperMethods(resolver, classDeclaration, mapperInterfaceBuilder, mapperImplementationBuilder)
             }
-            val implClassName = "${mapperName}Impl"
-            val mapperImplementationBuilder = mapperImplementations.getOrPut(implClassName) {
-                TypeSpec.classBuilder(implClassName)
-                    .addSuperinterface(ClassName("", mapperName))
-                    .addModifiers(KModifier.INTERNAL)
+
+            mapperInterfaces.forEach { (name, builder) ->
+                val file = FileSpec.builder("", name)
+                    .addType(builder.build())
+                    .build()
+                file.writeTo(codeGenerator, false)
             }
-            generateMapperMethods(resolver, classDeclaration, mapperInterfaceBuilder, mapperImplementationBuilder)
+
+            mapperImplementations.forEach { (name, builder) ->
+                val file = FileSpec.builder("", name)
+                    .addType(builder.build())
+                    .build()
+                file.writeTo(codeGenerator, false)
+            }
+
+            unresolvedSymbols = resolvedSymbols - validatedSymbols
         }
 
-        mapperInterfaces.forEach { (name, builder) ->
-            val file = FileSpec.builder("", name)
-                .addType(builder.build())
-                .build()
-            file.writeTo(codeGenerator, false)
-        }
-
-        mapperImplementations.forEach { (name, builder) ->
-            val file = FileSpec.builder("", name)
-                .addType(builder.build())
-                .build()
-            file.writeTo(codeGenerator, false)
-        }
-
-        return emptyList()
+        return unresolvedSymbols
     }
 
     private fun generateMapperMethods(
@@ -77,7 +91,6 @@ class MapperGeneratorProcessor(
         val domainProperties = domainClassDeclaration.getDeclaredProperties().toSet()
         val domainPropertiesNames = domainProperties.map { it.simpleName.asString() }.toSet()
         val commonPropertiesNames = entityPropertiesNames.intersect(domainPropertiesNames)
-        // .map { it.simpleName.asString() }.toSet()
 
         val commonProperties =
             (entityProperties + domainProperties).filter { it.simpleName.asString() in commonPropertiesNames }
