@@ -1,4 +1,4 @@
-package peoplehub.ui
+package peoplehub.ui.personDetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,11 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.peoplehub.R
-import peoplehub.domain.model.Address
 import peoplehub.domain.model.Person
-import peoplehub.ui.theme.PeopleHubTheme
 import peoplehub.ui.theme.Spacing
 
 @Composable
@@ -112,7 +109,7 @@ fun PersonDetailsScreen(
 }
 
 @Composable
-fun InfoRow(
+private fun InfoRow(
     label: String,
     value: String,
     modifier: Modifier = Modifier
