@@ -1,4 +1,4 @@
-package peoplehub.ui
+package peoplehub.ui.addPerson
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
