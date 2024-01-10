@@ -1,15 +1,17 @@
 <resources>
     <string name="app_name">PeopleHub</string>
-    
-    <string name="person_details">Person details</string>
+
+    <string name="people_screen_empty_title">No one is here yet</string>
+    <string name="add_person">Add person</string>
+    <string name="personal_info">Personal info</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="age">Age</string>
     <string name="address">Address</string>
+    <string name="email">Email</string>
+    <string name="person_details">Person details</string>
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="country">Country</string>
     <string name="postal_code">Postal Code</string>
-    <string name="email">Email</string>
-    <string name="add_person">Add person</string>
 </resources>
