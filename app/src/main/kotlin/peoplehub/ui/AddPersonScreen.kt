@@ -28,15 +28,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.peoplehub.R
 import peoplehub.domain.model.Address
 import peoplehub.domain.model.Person
-import peoplehub.ui.theme.PeopleHubTheme
 import peoplehub.ui.theme.Spacing
 
 @Composable
-fun PersonAddScreen(
+fun AddPersonScreen(
     onSaveClick: (Person) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -178,12 +176,13 @@ fun PersonAddScreen(
         }
 
         val isAddressValid = streetAddress.isNotBlank() && city.isNotBlank() &&
-                state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
+            state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
 
         Button(
             onClick = {
                 onSaveClick(
                     Person(
+                        personId = -1, // TODO
                         firstName = firstName.trim(),
                         lastName = lastName.trim(),
                         age = age.toIntOrNull(),
