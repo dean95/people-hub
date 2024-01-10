@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import annotation.GenerateMapper
 
 @Entity(tableName = "person")
+@GenerateMapper(name = "DbMapper")
 data class PersonEntity(
     @PrimaryKey(autoGenerate = true) val personId: Int = 0,
     @ColumnInfo(name = "first_name") val firstName: String,

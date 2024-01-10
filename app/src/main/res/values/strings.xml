@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PeopleHub</string>
 
+    <string name="people_screen_empty_title">No one is here yet</string>
+    <string name="add_person">Add person</string>
     <string name="personal_info">Personal info</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
