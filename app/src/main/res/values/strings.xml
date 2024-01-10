@@ -9,4 +9,9 @@
     <string name="age">Age</string>
     <string name="address">Address</string>
     <string name="email">Email</string>
+    <string name="person_details">Person details</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="postal_code">Postal Code</string>
 </resources>
