@@ -1,4 +1,4 @@
-package peoplehub.ui
+package peoplehub.ui.people
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.peoplehub.R
 import peoplehub.domain.model.Person
@@ -70,7 +69,6 @@ fun PeopleScreen(
                     .align(Alignment.BottomEnd)
                     .padding(Spacing.Medium)
                     .background(MaterialTheme.colorScheme.primary, CircleShape)
-                    .padding(Spacing.Small)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
