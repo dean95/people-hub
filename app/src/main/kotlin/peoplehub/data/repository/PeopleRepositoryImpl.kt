@@ -11,6 +11,10 @@ internal class PeopleRepositoryImpl(
         TODO("Not yet implemented")
     }
 
+    override fun getPerson(id: Int): Flow<Person> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun insertPerson(person: Person) {
         TODO("Not yet implemented")
     }

@@ -27,24 +27,24 @@ fun PersonDetailsScreen(
     ) {
         Text(
             text = stringResource(id = R.string.personal_info),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.displaySmall
         )
 
-        Spacer(modifier = Modifier.padding(bottom = Spacing.Large))
+        Spacer(modifier = Modifier.padding(bottom = Spacing.ExtraLarge))
 
         InfoRow(
             label = stringResource(id = R.string.first_name),
             value = person.firstName
         )
 
-        Spacer(modifier = Modifier.padding(bottom = Spacing.Small))
+        Spacer(modifier = Modifier.padding(bottom = Spacing.Medium))
 
         InfoRow(
             label = stringResource(id = R.string.last_name),
             value = person.lastName
         )
 
-        Spacer(modifier = Modifier.padding(bottom = Spacing.Small))
+        Spacer(modifier = Modifier.padding(bottom = Spacing.Medium))
 
         person.age?.let { age ->
             InfoRow(
@@ -52,51 +52,52 @@ fun PersonDetailsScreen(
                 value = age.toString()
             )
 
-            Spacer(modifier = Modifier.padding(bottom = Spacing.Small))
+            Spacer(modifier = Modifier.padding(bottom = Spacing.Medium))
         }
 
         person.address?.let { address ->
 
-            Spacer(modifier = Modifier.padding(bottom = Spacing.Small))
+            Spacer(modifier = Modifier.padding(bottom = Spacing.Medium))
 
             Text(
                 text = stringResource(id = R.string.address),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.padding(bottom = Spacing.Small))
+            Spacer(modifier = Modifier.padding(bottom = Spacing.Medium))
 
             Text(
                 text = address.street,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = Spacing.Small)
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = Spacing.Medium)
             )
 
             Text(
                 text = address.city,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = Spacing.Small)
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = Spacing.Medium)
             )
 
             Text(
                 text = address.state,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = Spacing.Small)
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = Spacing.Medium)
             )
 
             Text(
                 text = address.country,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = Spacing.Small)
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = Spacing.Medium)
             )
 
             Text(
                 text = address.postalCode,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = Spacing.Small, bottom = Spacing.Medium)
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = Spacing.Medium, bottom = Spacing.Medium)
             )
 
+            Spacer(modifier = Modifier.padding(bottom = Spacing.Medium))
         }
 
         person.email?.let { email ->
@@ -117,12 +118,12 @@ private fun InfoRow(
     Row(modifier = modifier) {
         Text(
             text = "$label: ",
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = value,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.titleLarge
         )
     }
 }

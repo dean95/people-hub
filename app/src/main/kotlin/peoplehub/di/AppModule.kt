@@ -2,10 +2,14 @@ package peoplehub.di
 
 import androidx.room.Room
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import peoplehub.data.db.AppDatabase
 import peoplehub.data.repository.PeopleRepository
 import peoplehub.data.repository.PeopleRepositoryImpl
+import peoplehub.ui.addPerson.AddPersonViewModel
+import peoplehub.ui.people.PeopleViewModel
+import peoplehub.ui.personDetails.PersonDetailsViewModel
 
 private const val DB_NAME = "app-database"
 
@@ -24,4 +28,12 @@ val appModule = module {
     }
 
     single<PeopleRepository> { PeopleRepositoryImpl(peopleDao = get()) }
+
+    viewModel { PeopleViewModel(peopleRepository = get()) }
+
+    viewModel { (personId: Int) ->
+        PersonDetailsViewModel(personId = personId, peopleRepository = get())
+    }
+
+    viewModel { AddPersonViewModel(peopleRepository = get()) }
 }
