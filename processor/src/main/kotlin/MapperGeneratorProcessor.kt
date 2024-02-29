@@ -64,11 +64,19 @@ class MapperGeneratorProcessor(
                 .addSuperinterface(ClassName("", mapperName))
                 .addModifiers(KModifier.INTERNAL)
         }
-        generateMapperMethods(resolver, classDeclaration, mapperInterfaceBuilder, mapperImplementationBuilder)
+        generateMapperMethods(
+            resolver,
+            classDeclaration,
+            mapperInterfaceBuilder,
+            mapperImplementationBuilder
+        )
     }
 
     // Extract the mapper name from class annotations
-    private fun extractMapperName(classDeclaration: KSClassDeclaration, annotationName: String) = classDeclaration
+    private fun extractMapperName(
+        classDeclaration: KSClassDeclaration,
+        annotationName: String
+    ) = classDeclaration
         .annotations
         .find {
             it.annotationType.resolve().declaration.qualifiedName?.asString() == annotationName

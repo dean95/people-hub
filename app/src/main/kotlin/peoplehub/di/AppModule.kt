@@ -1,5 +1,7 @@
 package peoplehub.di
 
+import DbMapper
+import DbMapperImpl
 import androidx.room.Room
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
@@ -23,5 +25,14 @@ val appModule = module {
         get<AppDatabase>().peopleDao()
     }
 
-    single<PeopleRepository> { PeopleRepositoryImpl(peopleDao = get()) }
+    single<DbMapper> {
+        DbMapperImpl()
+    }
+
+    single<PeopleRepository> {
+        PeopleRepositoryImpl(
+            peopleDao = get(),
+            dbMapper = get()
+        )
+    }
 }
