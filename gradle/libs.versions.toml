@@ -1,5 +1,6 @@
 [versions]
 agp = "8.2.0"
+koin-androidx-compose = "3.5.3"
 kotlin = "1.9.20"
 core-ktx = "1.12.0"
 junit = "4.13.2"
@@ -8,6 +9,7 @@ espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.8.2"
 compose-bom = "2023.10.01"
+navigation-compose = "2.7.6"
 org-jetbrains-kotlin-jvm = "1.9.0"
 room = "2.6.1"
 ksp = "1.9.20-1.0.14"
@@ -15,10 +17,12 @@ koin = "3.5.3"
 kotlinpoet = "1.15.3"
 
 [libraries]
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-androidx-compose" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }

@@ -14,4 +14,5 @@
     <string name="state">State</string>
     <string name="country">Country</string>
     <string name="postal_code">Postal Code</string>
+    <string name="person_added">Person added</string>
 </resources>

@@ -1,5 +1,6 @@
 package peoplehub.ui.addPerson
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -176,7 +178,9 @@ fun AddPersonScreen(
         }
 
         val isAddressValid = streetAddress.isNotBlank() && city.isNotBlank() &&
-            state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
+                state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
+
+        val context = LocalContext.current
 
         Button(
             onClick = {
@@ -196,6 +200,8 @@ fun AddPersonScreen(
                         email = email.trim().ifBlank { null }
                     )
                 )
+
+                Toast.makeText(context, R.string.person_added, Toast.LENGTH_LONG).show()
             },
             enabled = firstName.isNotBlank() && lastName.isNotBlank() && (inputAddress.not() || isAddressValid)
         ) {

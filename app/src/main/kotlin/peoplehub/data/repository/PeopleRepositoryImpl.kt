@@ -13,6 +13,10 @@ internal class PeopleRepositoryImpl(
     override fun getPeople(): Flow<List<Person>> =
         peopleDao.getAll().map { it.map(dbMapper::mapToPerson) }
 
+    override fun getPerson(id: Int): Flow<Person> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun insertPerson(person: Person) {
         peopleDao.insertPerson(dbMapper.mapToPersonEntity(person))
     }
