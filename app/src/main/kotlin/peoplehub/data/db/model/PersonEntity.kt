@@ -9,7 +9,7 @@ import annotation.GenerateMapper
 @Entity(tableName = "person")
 @GenerateMapper(name = "DbMapper")
 data class PersonEntity(
-    @PrimaryKey(autoGenerate = true) val personId: Int = 0,
+    @PrimaryKey val personId: String,
     @ColumnInfo(name = "first_name") val firstName: String,
     @ColumnInfo(name = "last_name") val lastName: String,
     val age: Int?,

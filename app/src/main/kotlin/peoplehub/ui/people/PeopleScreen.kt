@@ -33,7 +33,7 @@ import peoplehub.ui.theme.Spacing
 @Composable
 fun PeopleScreen(
     people: List<Person>,
-    onPersonClick: (Int) -> Unit,
+    onPersonClick: (String) -> Unit,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -102,9 +102,9 @@ private fun EmptyScreen(
 
 @Composable
 private fun PersonCard(
-    id: Int,
+    id: String,
     name: String,
-    onClick: (Int) -> Unit,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) = Text(
     text = name,

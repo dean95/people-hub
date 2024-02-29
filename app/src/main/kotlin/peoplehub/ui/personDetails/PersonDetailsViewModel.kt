@@ -8,13 +8,13 @@ import peoplehub.data.repository.PeopleRepository
 import peoplehub.domain.model.Person
 
 class PersonDetailsViewModel(
-    personId: Int,
+    personId: String,
     peopleRepository: PeopleRepository
 ) : ViewModel() {
 
     val state = peopleRepository.getPerson(personId).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = Person(0, "", "")
+        initialValue = Person("", "", "")
     )
 }

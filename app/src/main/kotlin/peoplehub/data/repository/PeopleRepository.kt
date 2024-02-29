@@ -7,7 +7,7 @@ interface PeopleRepository {
 
     fun getPeople(): Flow<List<Person>>
 
-    fun getPerson(id: Int): Flow<Person>
+    fun getPerson(id: String): Flow<Person>
 
     suspend fun insertPerson(person: Person)
 }

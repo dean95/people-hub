@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.peoplehub.R
+import java.util.UUID
 import peoplehub.domain.model.Address
 import peoplehub.domain.model.Person
 import peoplehub.ui.theme.Spacing
@@ -92,7 +93,7 @@ fun AddPersonScreen(
         OutlinedTextField(
             value = age,
             onValueChange = {
-                age = it.filter { it.isDigit() }
+                age = it.filter(Char::isDigit)
             },
             label = { Text(text = stringResource(id = R.string.age)) },
             keyboardOptions = KeyboardOptions(
@@ -178,7 +179,7 @@ fun AddPersonScreen(
         }
 
         val isAddressValid = streetAddress.isNotBlank() && city.isNotBlank() &&
-                state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
+            state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
 
         val context = LocalContext.current
 
@@ -186,7 +187,7 @@ fun AddPersonScreen(
             onClick = {
                 onSaveClick(
                     Person(
-                        personId = -1, // TODO
+                        personId = UUID.randomUUID().toString(),
                         firstName = firstName.trim(),
                         lastName = lastName.trim(),
                         age = age.toIntOrNull(),

@@ -1,7 +1,7 @@
 package peoplehub.domain.model
 
 data class Person(
-    val personId: Int,
+    val personId: String,
     val firstName: String,
     val lastName: String,
     val age: Int? = null,

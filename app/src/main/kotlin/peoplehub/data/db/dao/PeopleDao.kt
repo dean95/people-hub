@@ -14,4 +14,7 @@ interface PeopleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPerson(person: PersonEntity)
+
+    @Query("SELECT * FROM person WHERE personId IS :personId")
+    fun getPerson(personId: String): Flow<PersonEntity>
 }

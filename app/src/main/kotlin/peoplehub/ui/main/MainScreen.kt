@@ -49,12 +49,12 @@ fun MainScreen() {
 
         composable(
             route = PersonDetailsRoute,
-            arguments = listOf(navArgument(Id) { type = NavType.IntType })
+            arguments = listOf(navArgument(Id) { type = NavType.StringType })
         ) {
-            val id = it.arguments?.getInt(Id) ?: throw IllegalStateException("Id cannot be null")
+            val id = it.arguments?.getString(Id) ?: throw IllegalStateException("Id cannot be null")
 
             val viewModel = koinViewModel<PersonDetailsViewModel>(parameters = { parametersOf(id) })
-            val state = viewModel.state.collectAsState(initial = Person(0, "", ""))
+            val state = viewModel.state.collectAsState(initial = Person("", "", ""))
 
             PersonDetailsScreen(
                 person = state.value

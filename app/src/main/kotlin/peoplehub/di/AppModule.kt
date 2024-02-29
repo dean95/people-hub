@@ -49,7 +49,7 @@ val appModule = module {
 
     viewModel { PeopleViewModel(peopleRepository = get()) }
 
-    viewModel { (personId: Int) ->
+    viewModel { (personId: String) ->
         PersonDetailsViewModel(personId = personId, peopleRepository = get())
     }
 
