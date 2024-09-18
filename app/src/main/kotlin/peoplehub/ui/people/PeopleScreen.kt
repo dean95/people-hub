@@ -35,8 +35,7 @@ import peoplehub.ui.theme.Spacing
 fun PeopleScreen(
     people: List<Person>,
     onPersonClick: (String) -> Unit,
-    onAddClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onAddClick: () -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
@@ -55,7 +54,7 @@ fun PeopleScreen(
         }
     ) { contentPadding ->
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
         ) {
