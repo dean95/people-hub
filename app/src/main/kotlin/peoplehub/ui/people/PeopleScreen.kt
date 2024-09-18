@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,36 +38,11 @@ fun PeopleScreen(
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        if (people.isEmpty()) {
-            EmptyScreen(
-                onAddClick = onAddClick,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    horizontal = Spacing.Large,
-                    vertical = Spacing.Medium
-                ),
-                verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
-            ) {
-                items(people) {
-                    PersonCard(
-                        id = it.personId,
-                        name = "${it.firstName} ${it.lastName}",
-                        onClick = onPersonClick
-                    )
-                }
-            }
-
+    Scaffold(
+        floatingActionButton = {
             IconButton(
                 onClick = onAddClick,
                 modifier = Modifier
-                    .align(Alignment.BottomEnd)
                     .padding(Spacing.Medium)
                     .background(MaterialTheme.colorScheme.primary, CircleShape)
             ) {
@@ -75,6 +51,36 @@ fun PeopleScreen(
                     contentDescription = "Add",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
+            }
+        }
+    ) { contentPadding ->
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(contentPadding)
+        ) {
+            if (people.isEmpty()) {
+                EmptyScreen(
+                    onAddClick = onAddClick,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(
+                        horizontal = Spacing.Large,
+                        vertical = Spacing.Medium
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
+                ) {
+                    items(people) {
+                        PersonCard(
+                            id = it.personId,
+                            name = "${it.firstName} ${it.lastName}",
+                            onClick = onPersonClick
+                        )
+                    }
+                }
             }
         }
     }
