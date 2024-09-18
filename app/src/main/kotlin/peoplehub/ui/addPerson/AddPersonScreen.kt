@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,8 +39,7 @@ import peoplehub.ui.theme.Spacing
 
 @Composable
 fun AddPersonScreen(
-    onSaveClick: (Person) -> Unit,
-    modifier: Modifier = Modifier
+    onSaveClick: (Person) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     var inputAddress by rememberSaveable { mutableStateOf(false) }
@@ -59,154 +59,159 @@ fun AddPersonScreen(
     val keyboardActionDown =
         KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
 
-    Column(
-        modifier = modifier
-            .verticalScroll(scrollState)
-            .padding(Spacing.Large),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
-    ) {
-        Text(
-            text = stringResource(id = R.string.person_details),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.align(Alignment.Start)
-        )
-
-        OutlinedTextField(
-            value = firstName,
-            onValueChange = { firstName = it },
-            label = { Text(text = stringResource(id = R.string.first_name)) },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = keyboardActionDown,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = lastName,
-            onValueChange = { lastName = it },
-            label = { Text(text = stringResource(id = R.string.last_name)) },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = keyboardActionDown,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = age,
-            onValueChange = {
-                age = it.filter(Char::isDigit)
-            },
-            label = { Text(text = stringResource(id = R.string.age)) },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next
-            ),
-            keyboardActions = keyboardActionDown,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(text = stringResource(id = R.string.email)) },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = if (inputAddress) ImeAction.Next else ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = { focusManager.moveFocus(FocusDirection.Down) },
-                onDone = { focusManager.clearFocus() }),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+    Scaffold { contentPadding ->
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .padding(contentPadding)
+                .padding(horizontal = Spacing.Large),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
         ) {
-            Text(text = stringResource(id = R.string.address))
-            Spacer(modifier = Modifier.weight(1f))
-            Switch(checked = inputAddress, onCheckedChange = { inputAddress = inputAddress.not() })
-        }
+            Text(
+                text = stringResource(id = R.string.person_details),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.align(Alignment.Start)
+            )
 
-        AnimatedVisibility(visible = inputAddress) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
+            OutlinedTextField(
+                value = firstName,
+                onValueChange = { firstName = it },
+                label = { Text(text = stringResource(id = R.string.first_name)) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = keyboardActionDown,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = lastName,
+                onValueChange = { lastName = it },
+                label = { Text(text = stringResource(id = R.string.last_name)) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = keyboardActionDown,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = age,
+                onValueChange = {
+                    age = it.filter(Char::isDigit)
+                },
+                label = { Text(text = stringResource(id = R.string.age)) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = keyboardActionDown,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text(text = stringResource(id = R.string.email)) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = if (inputAddress) ImeAction.Next else ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) },
+                    onDone = { focusManager.clearFocus() }),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedTextField(
-                    value = streetAddress,
-                    onValueChange = { streetAddress = it },
-                    label = { Text(text = stringResource(id = R.string.address)) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    keyboardActions = keyboardActionDown,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OutlinedTextField(
-                    value = city,
-                    onValueChange = { city = it },
-                    label = { Text(text = stringResource(id = R.string.city)) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    keyboardActions = keyboardActionDown,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OutlinedTextField(
-                    value = state,
-                    onValueChange = { state = it },
-                    label = { Text(text = stringResource(id = R.string.state)) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    keyboardActions = keyboardActionDown,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OutlinedTextField(
-                    value = country,
-                    onValueChange = { country = it },
-                    label = { Text(text = stringResource(id = R.string.country)) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    keyboardActions = keyboardActionDown,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OutlinedTextField(
-                    value = postalCode,
-                    onValueChange = { postalCode = it },
-                    label = { Text(text = stringResource(id = R.string.postal_code)) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Text(text = stringResource(id = R.string.address))
+                Spacer(modifier = Modifier.weight(1f))
+                Switch(
+                    checked = inputAddress,
+                    onCheckedChange = { inputAddress = inputAddress.not() })
             }
-        }
 
-        val isAddressValid = streetAddress.isNotBlank() && city.isNotBlank() &&
-            state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
-
-        val context = LocalContext.current
-
-        Button(
-            onClick = {
-                onSaveClick(
-                    Person(
-                        personId = UUID.randomUUID().toString(),
-                        firstName = firstName.trim(),
-                        lastName = lastName.trim(),
-                        age = age.toIntOrNull(),
-                        address = if (isAddressValid) Address(
-                            street = streetAddress.trim(),
-                            city = city.trim(),
-                            state = state.trim(),
-                            country = country.trim(),
-                            postalCode = postalCode.trim()
-                        ) else null,
-                        email = email.trim().ifBlank { null }
+            AnimatedVisibility(visible = inputAddress) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
+                ) {
+                    OutlinedTextField(
+                        value = streetAddress,
+                        onValueChange = { streetAddress = it },
+                        label = { Text(text = stringResource(id = R.string.address)) },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardActions = keyboardActionDown,
+                        modifier = Modifier.fillMaxWidth()
                     )
-                )
 
-                Toast.makeText(context, R.string.person_added, Toast.LENGTH_LONG).show()
-            },
-            enabled = firstName.isNotBlank() && lastName.isNotBlank() && (inputAddress.not() || isAddressValid)
-        ) {
-            Text(text = stringResource(id = R.string.add_person))
+                    OutlinedTextField(
+                        value = city,
+                        onValueChange = { city = it },
+                        label = { Text(text = stringResource(id = R.string.city)) },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardActions = keyboardActionDown,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = state,
+                        onValueChange = { state = it },
+                        label = { Text(text = stringResource(id = R.string.state)) },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardActions = keyboardActionDown,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = country,
+                        onValueChange = { country = it },
+                        label = { Text(text = stringResource(id = R.string.country)) },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardActions = keyboardActionDown,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = postalCode,
+                        onValueChange = { postalCode = it },
+                        label = { Text(text = stringResource(id = R.string.postal_code)) },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+
+            val isAddressValid = streetAddress.isNotBlank() && city.isNotBlank() &&
+                    state.isNotBlank() && country.isNotBlank() && postalCode.isNotBlank()
+
+            val context = LocalContext.current
+
+            Button(
+                onClick = {
+                    onSaveClick(
+                        Person(
+                            personId = UUID.randomUUID().toString(),
+                            firstName = firstName.trim(),
+                            lastName = lastName.trim(),
+                            age = age.toIntOrNull(),
+                            address = if (isAddressValid) Address(
+                                street = streetAddress.trim(),
+                                city = city.trim(),
+                                state = state.trim(),
+                                country = country.trim(),
+                                postalCode = postalCode.trim()
+                            ) else null,
+                            email = email.trim().ifBlank { null }
+                        )
+                    )
+
+                    Toast.makeText(context, R.string.person_added, Toast.LENGTH_LONG).show()
+                },
+                enabled = firstName.isNotBlank() && lastName.isNotBlank() && (inputAddress.not() || isAddressValid)
+            ) {
+                Text(text = stringResource(id = R.string.add_person))
+            }
         }
     }
 }
