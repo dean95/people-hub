@@ -67,8 +67,7 @@ fun PeopleScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(
-                        horizontal = Spacing.Large,
-                        vertical = Spacing.Medium
+                        horizontal = Spacing.Large
                     ),
                     verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
                 ) {
